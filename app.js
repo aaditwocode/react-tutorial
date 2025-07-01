@@ -1,3 +1,49 @@
-const heading=React.createElement("h1",{id:"heading" ,xyz:"abj"},"Hello World from React");
-const root=ReactDOM.createRoot(document.getElementById('root'));
-root.render(heading);
+// const heading=React.createElement("h1",{id:"heading" ,xyz:"abj"},"Hello World from React");
+// const root=ReactDOM.createRoot(document.getElementById('root'));
+// root.render(heading);
+
+import React from "react";
+import ReactDOM from "react-dom/client";
+
+const elem = <span>I am a span</span>;
+
+const Title = () => (
+  <div>
+    <h1 tabIndex="5" className="head">NAMASTE REACT USING JSX</h1>
+    {elem}
+  </div>
+);
+
+const string1 = "I am a string";
+
+const Heading = () => (
+  <div className="heading">
+    <Title />
+    <h1>Using Functional Component</h1>
+    <h2>WE CAN ALSO DO NORMAL JS HERE</h2>
+    
+    
+    <img 
+      src="https://via.placeholder.com/150" 
+      alt="Sample placeholder" 
+      style={{ margin: '10px', border: '2px solid #333' }}
+    />
+    
+
+    <a 
+      href="https://reactjs.org" 
+      target="_blank" 
+      rel="noopener noreferrer"
+      style={{ display: 'block', margin: '10px 0' }} >
+      Learn React (opens in new tab)
+    </a>
+    
+    <ol>
+      <li>{100 + 200}</li>
+      <li>{string1}</li>
+    </ol>
+  </div>
+);
+
+const root = ReactDOM.createRoot(document.getElementById("root"));
+root.render(<Heading />);
