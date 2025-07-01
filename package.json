@@ -1,0 +1,35 @@
+{
+  "name": "react-tutorial",
+  "version": "1.0.0",
+  "description": "",
+  "keywords": [],
+  "homepage": "https://github.com/aaditwocode/react-tutorial#readme",
+  "bugs": {
+    "url": "https://github.com/aaditwocode/react-tutorial/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/aaditwocode/react-tutorial.git"
+  },
+  "license": "ISC",
+  "author": "aaditya",
+  "type": "commonjs",
+  "scripts": {
+    "start": "parcel index.html",
+    "build": "parcel build index.html",
+    "test": "jest"
+  },
+  "browserslist": {
+    "production": [
+      "last 10 chrome versions",
+      "last 10 firefox versions"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version"
+    ]
+  },
+  "devDependencies": {
+    "parcel": "^2.15.4"
+  }
+}
