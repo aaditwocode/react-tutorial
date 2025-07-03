@@ -1,51 +1,3 @@
-import React from "react";
-import ReactDOM from "react-dom/client";
-import {logo} from "./image1.png"; 
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCartShopping } from '@fortawesome/free-solid-svg-icons';
-import { faStar } from '@fortawesome/free-solid-svg-icons';
-const Header = () => {
-    return (
-        <div className="header">
-            <div className="logo-container">
-                <img src={logo}/>
-            </div>
-            <div className="nav-items">
-                <ul>
-                    <li>Home</li>
-                    <li>About Us</li>
-                    <li>Contact Us</li>
-                    <li><FontAwesomeIcon icon={faCartShopping} /></li>
-                </ul>
-            </div>
-        </div>
-        
-    )
-}
-const styleCard ={
-    backgroundColor: "#e8a9eb",
-}
-
-const RestaurantCard = ({ restaurant }) => {
-    return (
-        <div className="res-card" style={styleCard}>
-            <img className="res-logo" src={restaurant.logo} alt={`${restaurant.name} logo`} />
-            <h3>{restaurant.name}</h3>
-            <span className="res-head">
-                <p className="rating">
-                    {restaurant.rating}
-                    <FontAwesomeIcon icon={faStar} />
-                </p>
-                <p className="type">{restaurant.type}</p>
-            </span>
-            <span className="res-body">
-                <p className="cuisine">{restaurant.cuisine}</p>
-                <p className="location">{restaurant.location}</p>
-            </span>
-        </div>
-    );
-};
-
 const restaurantData = [
     {
         name: "TableSpoon",
@@ -66,7 +18,7 @@ const restaurantData = [
     {
         name: "Barbeque Nation",
         logo: "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/2c/1c/c6/d1/caption.jpg?w=600&h=-1&s=1",
-        rating: 4.6,
+        rating: 3.6,
         type: "Buffet",
         cuisine: "Indian, BBQ, North Indian, Desserts",
         location: "Connaught Place, New Delhi",
@@ -82,7 +34,7 @@ const restaurantData = [
     {
         name: "Sagar Ratna",
         logo: "https://b.zmtcdn.com/data/pictures/9/20473779/71d216d2b5b7a2e7a2fd7a8dc5323f65.jpg",
-        rating: 4.2,
+        rating: 3.2,
         type: "Casual Dining",
         cuisine: "South Indian, Vegetarian",
         location: "Sector 12, Dwarka, New Delhi",
@@ -98,7 +50,7 @@ const restaurantData = [
     {
         name: "Punjab Grill",
         logo: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS0f1vlGvlKbVzBoiPM7_D0N8Dvdu8hyQc4bw&s",
-        rating: 4.3,
+        rating: 3.3,
         type: "Fine Dining",
         cuisine: "North Indian, Mughlai",
         location: "Ambience Mall, Vasant Kunj, New Delhi",
@@ -122,35 +74,10 @@ const restaurantData = [
     {
         name: "Tamasha",
         logo: "https://media-cdn.tripadvisor.com/media/photo-s/0e/7b/9d/e0/beautiful-decor.jpg",
-        rating: 4.2,
+        rating: 2.2,
         type: "Bar & Lounge",
         cuisine: "North Indian, Continental, Italian",
         location: "Connaught Place, New Delhi",
     },
 ];
-
-const Body= () => {
-    return (
-        <div className="body">
-            <div className="search">
-                <input type="text" placeholder="Search restaurants..." />
-            </div>
-            <div className="res-container">
-            {restaurantData.map((restaurant, index) => (
-                    <RestaurantCard key={index} restaurant={restaurant} />
-                ))}
-            </div>
-        </div>
-    )
-}
-
-const AppLayout = () => {
-    return (
-        <div className="app">
-            <Header/>
-            <Body/>
-        </div>
-    )
-}
-const root = ReactDOM.createRoot(document.getElementById("root"));
-root.render(<AppLayout />);
+export default restaurantData;
