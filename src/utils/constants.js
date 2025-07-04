@@ -1,1 +1,0 @@
-///store any links of project like logo_url=" '"
