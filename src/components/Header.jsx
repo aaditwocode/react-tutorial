@@ -1,7 +1,7 @@
-import logo from "../../image1.png";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCartShopping } from '@fortawesome/free-solid-svg-icons';
-import {useState,useEffect} from "react";
+import {useState} from "react";
+import { Link } from "react-router";
 const Header = () => {
     const [btnName,changeBtn]=useState("Login");
     return (
@@ -11,9 +11,21 @@ const Header = () => {
             </div>
             <div className="nav-items">
                 <ul>
-                    <li>Home</li>
-                    <li>About Us</li>
-                    <li>Contact Us</li>
+                    <li>
+                        <Link to="/">
+                            Home
+                        </Link>
+                    </li>
+                    <li>
+                        <Link to="/about">
+                            About Us
+                        </Link>
+                    </li>
+                    <li>
+                        <Link to="/contact">
+                            Contact Us
+                        </Link>
+                    </li>
                     <button className="login"
                     onClick={()=>{
                         if(btnName=="Login")
@@ -22,7 +34,7 @@ const Header = () => {
                             changeBtn("Login");
                     }
                     }>{btnName}</button>
-                    <li><FontAwesomeIcon icon={faCartShopping} /></li>
+                    <li><FontAwesomeIcon icon={faCartShopping} className="icon"/></li>
                 </ul>
             </div>
         </div>
