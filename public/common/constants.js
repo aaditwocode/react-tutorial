@@ -13,5 +13,21 @@ export const IMG_CDN_URL = `https://media-assets.swiggy.com/swiggy/image/upload/
 // Optional: original Swiggy path if you scrape raw
 export const SWIGGY_REST_API_PATH = `data?.cards[1]?.card?.card?.gridElements?.infoWithStyle?.restaurants`;
 
+// Social Media Links - URL
+export const LINKEDIN_LINK = "https://www.linkedin.com/in/aaditya-pratap-singh-b39186284/";
+export const GiTHUB_LINK = "https://github.com/aaditwocode";
+export const TWITTER_LINK = "https://x.com/abc/";
+export const EMAIL_LINK = "mailto:abc2005@gmail.com";
+
+// Github - username and repository name
+export const GITHUB_USERNAME = "aaditwocode";
+export const GITHUB_REPOSITORY_NAME = "react-tutorial";
+
+// Github API for User
+export const GITHUB_USER_API = "https://api.github.com/users/";
+
+// Github API for Repository
+export const GITHUB_REPO_API = "https://api.github.com/repos/";
+
 
 

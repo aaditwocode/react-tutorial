@@ -6,7 +6,7 @@ import { SWIGGY_API_URL } from "../../public/common/constants.js";
 import Shimmer from "./Shimmer";
 
 const Body = () => {
-  const [resData, setList] = useState([]);
+  const [resData, setList] = useState([])
   const [searchRestaurant, setSearchRestaurant] = useState("");
   const [filteredRestaurants, setFilteredRestaurants] = useState([]);
   const [restaurantName, setRestaurantName] = useState("");
