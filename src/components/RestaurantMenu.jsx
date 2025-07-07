@@ -1,30 +1,15 @@
-import { useState, useEffect } from "react";
-import { MENU_API_URL,IMG_CDN_URL } from "../../public/common/constants.js";
+import { IMG_CDN_URL } from "../../public/common/constants.js";
 import Shimmer from "./Shimmer";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStar } from '@fortawesome/free-solid-svg-icons';
 import { useParams } from "react-router";
 import "../ResturantMenu.css";
+import useResturantMenu from "../utils/useResturantMenu.jsx";
 
 const RestaurantMenu = () => {
-    const [restaurantInfo, setRestaurantInfo] = useState(null);
     const { resId } = useParams();
-
-    const fetchMenusData = async () => {
-        try {
-        const data = await fetch(MENU_API_URL + resId);
-        const json = await data.json();
-        console.log(json);
-        setRestaurantInfo(json?.data);
-        } catch (error) {
-        console.error("Error fetching data:", error);
-        }
-    };
-
-    useEffect(() => {
-        fetchMenusData();
-    }, [resId]);
-
+    //Custom Hook
+    const restaurantInfo = useResturantMenu(resId);
     if (restaurantInfo === null) {
         return <Shimmer />;
     }
