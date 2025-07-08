@@ -2,40 +2,44 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStar } from '@fortawesome/free-solid-svg-icons';
 import { IMG_CDN_URL } from '../../public/common/constants.js'; // adjust if in src/constants.js
 
-const styleCard = {
-  backgroundColor: "#e8e9eb",
-  borderRadius: "10px",
-  padding: "10px",
-  width: "250px",
-  boxShadow: "0 2px 5px rgba(0,0,0,0.1)",
-};
-
 const RestaurantCard = ({
-  name,
-  cuisines,
-  avgRating,
-  areaName,
-  cloudinaryImageId,
-}) => {
-  const imageUrl = cloudinaryImageId
-    ? IMG_CDN_URL + cloudinaryImageId
-    : "/image1.png"; // fallback
-
-  return (
-    <div className="res-card" style={styleCard}>
-      <img
-        src={imageUrl}
-        alt={`${name} logo`}
-        style={{ width: "100%", height: "160px", objectFit: "cover", borderRadius: "8px" }}
-      />
-      <h3>{name}</h3>
-      <p>{cuisines?.join(", ")}</p>
-      <p>
-        <FontAwesomeIcon icon={faStar} style={{ color: "orange" }} /> {avgRating}
-      </p>
-      <p>{areaName}</p>
-    </div>
-  );
+    id,
+    cloudinaryImageId,
+    name,
+    areaName,
+    sla,
+    cuisines,
+    costForTwo,
+    avgRating,
+    }) => {
+    return (
+        <Link to={"/restaurants/" + id}>
+            <div className="w-64 h-80 bg-gray-200 rounded-lg shadow-md transition-transform duration-200 hover:scale-105">
+                <img
+                className="w-full h-[180px] rounded-md"
+                src={IMG_CDN_URL + cloudinaryImageId}
+                alt={name}
+                />
+                <h3 className="text-lg font-semibold mt-2 truncate">{name}</h3>
+                <div className="flex items-center gap-3 mt-1">
+                <p
+                    className={`text-white text-sm font-semibold px-2 py-1 rounded-md flex items-center gap-1 ${
+                    avgRating >= 4.0 ? "bg-green-500" : "bg-red-500"
+                    }`}
+                >
+                    {avgRating}
+                    <FontAwesomeIcon icon={faStar} />
+                </p>
+                <h4 className="text-sm text-gray-700">{costForTwo}</h4>
+                <h4 className="text-sm text-gray-700">{sla.deliveryTime} mins</h4>
+                </div>
+                <div className="mt-2 text-sm text-gray-600">
+                <p className="truncate">{cuisines.join(", ")}</p>
+                <p className="text-gray-500">{areaName}</p>
+                </div>
+            </div>
+        </Link>
+    );
 };
 
 export default RestaurantCard;

@@ -30,30 +30,42 @@ const Body = () => {
         setIsLoading(true);
         setError(null);
         try {
-            const response = await fetch("https://proxy.corsfix.com/?https://www.swiggy.com/dapi/restaurants/list/v5?lat=28.626547&lng=77.092428&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING");
+            // Try direct API first
+            const response = await fetch(
+                "https://corsproxy.io/?" + 
+                encodeURIComponent(
+                    "https://www.swiggy.com/dapi/restaurants/list/v5?lat=28.626547&lng=77.092428&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING"
+                ),
+                {
+                    headers: {
+                        'Content-Type': 'application/json',
+                    }
+                }
+            );
+
             if (!response.ok) {
-                throw new Error(`Failed to fetch: ${response.status}`);
+                throw new Error(`API request failed with status ${response.status}`);
             }
+
             const json = await response.json();
 
-            // Safer alternative to eval()
-            const pathParts =data?.cards[1]?.card?.card?.gridElements?.infoWithStyle?.restaurants.split('.');
-            let restaurants = json;
-            for (const part of pathParts) {
-                restaurants = restaurants?.[part];
-                if (restaurants === undefined) break;
-            }
-            restaurants = Array.isArray(restaurants) ? restaurants : [];
+            // Updated data extraction logic
+            const restaurants = json?.data?.cards?.find(
+                card => card?.card?.card?.gridElements?.infoWithStyle?.restaurants
+            )?.card?.card?.gridElements?.infoWithStyle?.restaurants || [];
 
             if (restaurants.length === 0) {
-                throw new Error("No restaurants data found");
+                throw new Error("No restaurants found in response");
             }
 
             setList(restaurants);
             setFilteredRestaurants(restaurants);
         } catch (error) {
-            console.error("Error fetching data:", error);
-            setError(error.message);
+            console.error("API Error:", error);
+            // Fallback to mock data
+            setList(mockData);
+            setFilteredRestaurants(mockData);
+            setError("Using sample data - API failed: " + error.message);
         } finally {
             setIsLoading(false);
         }
@@ -74,22 +86,12 @@ const Body = () => {
         return <Shimmer />;
     }
 
-    if (error) {
-        return (
-            <div className="error-container">
-                <h2>Something went wrong</h2>
-                <p>{error}</p>
-                <button onClick={fetchData}>Try Again</button>
-            </div>
-        );
-    }
-
     return (
-        <div className="body">
-            <div className="search">
+        <div className="p-5">
+            <div className="flex justify-center gap-4 my-5">
                 <input 
                     type="text" 
-                    className="search-bar" 
+                    className="w-4/5 p-3 border border-gray-300 rounded-full text-lg focus:outline-none focus:ring-2 focus:ring-blue-400" 
                     placeholder="Search restaurants..." 
                     value={searchRestaurant}
                     onChange={(e) => setSearchRestaurant(e.target.value)}
@@ -100,13 +102,20 @@ const Body = () => {
                     }}
                 />
                 <button
-                    className="search-icon"
+                    className="p-3 bg-blue-500 text-white rounded-full hover:bg-blue-600"
                     onClick={handleSearch}
                 >
                     <FontAwesomeIcon icon={faMagnifyingGlass} />
                 </button>
             </div>
-            <div className="res-container">
+
+            {error && (
+                <div className="bg-yellow-100 border-l-4 border-yellow-500 p-4 mb-4">
+                    <p className="text-yellow-700">{error}</p>
+                </div>
+            )}
+
+            <div className="flex flex-wrap gap-5 justify-center">
                 {filteredRestaurants.length > 0 ? (
                     filteredRestaurants.map((restaurant) => (
                         <RestaurantCard
@@ -115,7 +124,7 @@ const Body = () => {
                         />
                     ))
                 ) : (
-                    <h2>
+                    <h2 className="text-xl font-semibold">
                         {restaurantName 
                             ? `Sorry, we couldn't find any restaurant for "${restaurantName}"`
                             : "No restaurants available"}
