@@ -71,7 +71,7 @@ import {Component} from "path";
 
 
  # Redux Toolkit
-  - Install @reduxjs/toolkit and react-redux
+  - Install @reduxjs/toolkit   npm i @reduxjs/toolkit and react-redux  npm i @types/react-redux
   - Build our store
   - Connect our store to our app
   - Slice (cartSlice)

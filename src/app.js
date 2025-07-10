@@ -11,6 +11,7 @@ import RestaurantMenu from './components/RestaurantMenu.jsx';
 import Loading from "./components/Loading.jsx";
 import { createBrowserRouter,RouterProvider,Outlet} from "react-router";
 import UserContext from "./utils/UserContext.js";
+import {Provider} from "react-redux";
 
 /*
     Basically our bundler parcel consolidates all the code into one JS file.
@@ -27,13 +28,15 @@ const AppLayout = () => {
     const [userName, setUserName] = useState("Guest");
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     return (
-        <UserContext.Provider value={{ loggedInUser: userName, setUserName,isLoggedIn:isLoggedIn,setIsLoggedIn }}>
-        <div className="app">
-            <Header />
-            <Outlet />
-            <Footer />
-        </div>
-        </UserContext.Provider>
+         <Provider store={appStore}>
+            <UserContext.Provider value={{ loggedInUser: userName, setUserName,isLoggedIn:isLoggedIn,setIsLoggedIn }}>
+                <div className="app">
+                    <Header />
+                    <Outlet />
+                    <Footer />
+                </div>
+            </UserContext.Provider>
+        </Provider>
     )
 }
 const appRouter = createBrowserRouter([
@@ -64,6 +67,10 @@ const appRouter = createBrowserRouter([
             {
                 path:"/login",
                 element: <Login/>
+            },
+             {
+                path:"/cart",
+                element: <Cart/>
             }
         ],
         errorElement: <Error/>,

@@ -1,7 +1,14 @@
 import { IMG_CDN_URL } from "../../../public/common/constants";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faStar } from "@fortawesome/free-solid-svg-icons";
+import { useDispatch } from "react-redux";
+import { addItem } from "../utils/cartSlice";
 const MenuList = ({ items }) => {
+    const dispatch = useDispatch();
+    const handleAddItem = (item)=>{
+        //dispatch an action
+        dispatch(addItem(item));
+    }
     return (
         <div>
         {items.length?(
@@ -25,9 +32,17 @@ const MenuList = ({ items }) => {
                     <h4 className="text-md text-gray-700">
                     ₹{price / 100 || defaultPrice / 100}
                     </h4>
-                    <p className="text-sm text-gray-500">
-                    {description ? description.slice(0, 60) : "Dummy"}
-                    </p>
+                    <div className="relative group">
+                        <p className="text-sm text-gray-600 line-clamp-2 leading-relaxed">
+                            {description || "No description available"}
+                        </p>
+                        
+                        {description && description.length > 60 && (
+                            <div className="absolute right-0 top-5 hidden group-hover:block bg-white p-3 rounded shadow-lg z-10 w-64 text-sm">
+                            {description}
+                            </div>
+                        )}
+                        </div>
                     <div
                     className={`text-white px-2 py-1 rounded-md flex w-max items-center space-x-1 text-sm ${
                         ratings?.aggregatedRating?.rating >= 4
@@ -48,7 +63,10 @@ const MenuList = ({ items }) => {
                     alt={name}
                     className="w-24 h-24 rounded-lg object-cover"
                     />
-                    <button className="mt-2 px-4 py-2 bg-gray-800 text-white rounded-lg hover:bg-gray-700 transition">
+                    <button 
+                    className="mt-2 px-4 py-2 bg-gray-800 text-white rounded-lg hover:bg-gray-700 transition"
+                    onMouseDown={(e)=>handleAddItem(item)}
+                    >
                     ADD
                     </button>
                 </div>
