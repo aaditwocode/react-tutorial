@@ -10,6 +10,7 @@ import Footer from './components/Footer.jsx';
 import RestaurantMenu from './components/RestaurantMenu.jsx';
 import Loading from "./components/Loading.jsx";
 import { createBrowserRouter,RouterProvider,Outlet} from "react-router";
+import UserContext from "./utils/UserContext.js";
 
 /*
     Basically our bundler parcel consolidates all the code into one JS file.
@@ -19,16 +20,20 @@ import { createBrowserRouter,RouterProvider,Outlet} from "react-router";
 /*
     But react is very fast, since it expected the grocery code to arrive which rather takes some times (12ms), it throws an error. Thus we import a component, Suspense, from react which suspends 
 */
-const Grocery = lazy(()=>import("./components/Grocery.jsx"));// Comes as a named export from react package.
-const AboutUs = lazy(()=>import("./components/Aboutus.jsx"));
-
+const Grocery = lazy(()=>import("./components/Grocery.jsx")) // Comes as a named export from react package.
+const AboutUs = lazy(()=>import("./components/Aboutus.jsx"))
+const Login = lazy(()=>import("./components/Login.jsx"))
 const AppLayout = () => {
+    const [userName, setUserName] = useState("Guest");
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
     return (
+        <UserContext.Provider value={{ loggedInUser: userName, setUserName,isLoggedIn:isLoggedIn,setIsLoggedIn }}>
         <div className="app">
-            <Header/>
-            <Outlet/>
-            <Footer/>
+            <Header />
+            <Outlet />
+            <Footer />
         </div>
+        </UserContext.Provider>
     )
 }
 const appRouter = createBrowserRouter([
@@ -42,19 +47,23 @@ const appRouter = createBrowserRouter([
             },
             {
                 path:"/about",
-                element: <Aboutus/>
+                element: <Suspense fallback={<Loading/>}><AboutUs/></Suspense>
+            },
+            {
+                path:"/grocery",
+                element: <Suspense fallback={<Loading/>}><Grocery/></Suspense>
             },
             {
                 path:"/contact",
                 element: <ContactUs/>
             },
             {
-                path:"/Grocery",
-                element: <Suspense fallback={<Loading/>}><Grocery/></Suspense>
-            },
-            {
                 path:"/restaurants/:resId",
                 element:<RestaurantMenu/>
+            },
+            {
+                path:"/login",
+                element: <Login/>
             }
         ],
         errorElement: <Error/>,
