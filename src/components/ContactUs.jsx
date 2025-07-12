@@ -1,10 +1,14 @@
-const ContactUs = () => {
-    return (
-        <div>
-            <h1>Contact Us</h1>
-            <p>Feel free to reach out to us!</p>
-        </div>
-    );
-};
+import { useContext } from 'react';
+import { UserContext } from './UserContext';
 
-export default ContactUs;
+export default function ContactUs() {
+  const { name } = useContext(UserContext);
+
+  return (
+    <div>
+      <h1>Contact Us</h1>
+      <p>Welcome, {name}!</p>
+      <button>Send Message</button>
+    </div>
+  );
+}
